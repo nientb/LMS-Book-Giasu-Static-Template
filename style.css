@@ -1,0 +1,104 @@
+.info-before::before {
+  position               : absolute;
+  content                : '';
+  height                 : 20px;
+  top                    : -15px;
+  right                  : 0;
+  left                   : 0;
+  background-color       : #fff;
+  border-top-left-radius : 10px;
+  border-top-right-radius: 10px;
+}
+
+.info-before::after {
+  content                  : '';
+  position                 : absolute;
+  left                     : 0;
+  right                    : 0;
+  bottom                   : -16px;
+  border-bottom            : 16px solid transparent;
+  border-left              : 180px solid white;
+  border-bottom-left-radius: 10px
+}
+
+.box-shadow--bottom {
+  box-shadow: 0px 40px 32px -30px #ccdefc;
+}
+
+.active--link {
+  color        : #3C6AF3 !important;
+  border-bottom: 3px solid #3C6AF3;
+}
+
+/* Pagination */
+.pagination {
+  display        : flex;
+  justify-content: center;
+}
+
+.pagination ul {
+  /* max-width: 50%; */
+  display   : flex;
+  flex-wrap : wrap;
+  background: #fff;
+  padding   : 8px;
+}
+
+.pagination ul li {
+  color        : #000;
+  list-style   : none;
+  line-height  : 35px;
+  text-align   : center;
+  font-size    : 15px;
+  font-weight  : 500;
+  cursor       : pointer;
+  user-select  : none;
+  transition   : all 0.3s ease;
+  border-radius: 50%;
+}
+
+.pagination ul li.numb {
+  list-style   : none;
+  height       : 36px;
+  width        : 36px;
+  margin       : 0 3px;
+  line-height  : 36px;
+  border-radius: 6px;
+  border       : 1px solid #dfe3e8;
+  border-radius: 50%;
+}
+
+.pagination ul li.numb.first {
+  margin: 0px 3px 0 -5px;
+}
+
+.pagination ul li.numb.last {
+  margin: 0px -5px 0 3px;
+}
+
+.pagination ul li.dots {
+  font-size: 22px;
+  cursor   : default;
+}
+
+.pagination ul li.btn {
+  padding         : 0 12px;
+  border          : 1px solid #dfe3e8;
+  /* border-radius: 6px; */
+}
+
+.pagination ul li.btn.prev {
+  margin-right: 0.5rem;
+}
+
+.pagination ul li.btn.next {
+  margin-left: 0.5rem;
+}
+
+.pagination li.active,
+.pagination ul li.numb:hover,
+.pagination ul li:first-child:hover,
+.pagination ul li:last-child:hover {
+  color     : #fff;
+  background: #0d7dfc;
+}
