@@ -1,6 +1,7 @@
 // LIST MENTOR
 const listMentorEl = document.getElementById("list-mentor");
 const paginationEl = document.getElementById("pagination");
+const popupEl = document.getElementById("popup");
 
 const mentors = window.mentors;
 
@@ -79,28 +80,77 @@ if (mentors.length) {
     paginationEl.innerHTML = liTag;
     return liTag;
   }
-  paginationContent();
 
   // RENDER LIST MENTOR
   function renderListMentor(data) {
     listMentorEl.innerHTML = "";
-    for (let i = 0; i < data.length; i++) {
+    for (let mentor of data) {
       const li = document.createElement("li");
       li.innerHTML = `
-      <div>
+      <div onclick='onDetailMentor(${JSON.stringify(mentor)})' class="cursor-pointer">
         <div class="relative flex justify-center">
-          <img src="${data[i].picture}" alt="teacher">
-          <div class="absolute bottom-0 text-center px-4 py-1 text-white rounded-xl z-10" style="background-image: linear-gradient(${data[i].color[0]}, ${data[i].color[1]});">${data[i].course}</div>
+          <img src="${mentor.picture}" alt="teacher">
+          <div class="absolute bottom-0 text-center px-4 py-1 text-white rounded-xl z-10" style="background-image: linear-gradient(${
+            mentor.color[0]
+          }, ${mentor.color[1]});">${mentor.course}</div>
         </div>
         <div class="relative rounded px-2 pt-2 pb-2 text-center shadow-xl info-before info-after">
-          <div class="font-medium text-sm">${data[i].name}</div>
-          <div class="text-xs text-slate-400 my-1">${data[i].workPlace}</div>
-          <span class="text-lg font-semibold">-${data[i].code}-</span>
-          <div class="text-sm">${data[i].degree}</div>
+          <div class="font-medium text-sm">${mentor.name}</div>
+          <div class="text-xs text-slate-400 my-1">${mentor.workPlace}</div>
+          <span class="text-lg font-semibold">-${mentor.code}-</span>
+          <div class="text-sm">${mentor.degree}</div>
         </div>
       </div>
       `;
       listMentorEl.appendChild(li);
     }
   }
+}
+
+// SHOW DETAIL MENTOR POPUP
+function onDetailMentor(mentor) {
+  if (popupEl.classList.contains('hidden')) {
+    popupEl.classList.remove('hidden');
+  }
+  popupEl.innerHTML = '';
+  popupEl.innerHTML = `
+    <div>
+      <div class="w-6/12 h-4/6 relative py-10 px-12 mt-[60px] m-auto flex gap-6 bg-white rounded">
+        <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-regular fa-circle-xmark"></i></div>  
+        <div class="flex-1"><img class="w-[300px]" src="${mentor.picture}" alt="${mentor.name}" /></div>
+        <div class="flex-1">
+          <div class="text-xl font-bold text-primary">${mentor.name}</div>
+          <div class="font-semibold">Mã gia sư: ${mentor.code}</div>
+          <div class="relative flex justify-between items-start gap-4 rounded-t-2xl rounded-br-2xl shadow-xl py-4 px-4 mt-5 mb-8 detail-mentor">
+            <div class="flex-1 text-center">
+              <div class="flex justify-center">
+                <img src="public/images/map.png" alt="map" />
+              </div>
+              <div class="text-[12px]">Bộ môn</div>
+              <div class="font-medium text-[14px]">${mentor.course}</div>
+            </div>
+            <div class="flex-1 text-center">
+              <div class="flex justify-center">
+                <img src="public/images/briefcase.png" alt="map" />
+              </div>
+              <div class="text-[12px]">Nơi công tác</div>
+              <div class="font-medium text-[14px]">${mentor.workPlace}</div>
+            </div>
+            <div class="flex-1 text-center">
+              <div class="flex justify-center">
+                <img src="public/images/award.png" alt="map" />
+              </div>
+              <div class="text-[12px]">Học vị</div>
+              <div class="font-medium text-[14px]">${mentor.degree}</div>
+            </div>
+          </div>
+          <div class="text-sm break-all h-[230px] text-ellipsis overflow-auto scrollbar-custom">${mentor.description}</div>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function onClose () {
+  popupEl.classList.add('hidden');
 }

@@ -9,7 +9,6 @@
   border-top-left-radius : 10px;
   border-top-right-radius: 10px;
 }
-
 .info-before::after {
   content                  : '';
   position                 : absolute;
@@ -21,6 +20,17 @@
   border-bottom-left-radius: 10px
 }
 
+.detail-mentor::after {
+  content                  : '';
+  position                 : absolute;
+  left                     : 0;
+  right                    : 0;
+  bottom                   : -13px;
+  border-bottom            : 14px solid transparent;
+  border-left              : 313px solid white;
+  border-bottom-left-radius: 10px
+}
+
 .box-shadow--bottom {
   box-shadow: 0px 40px 32px -30px #ccdefc;
 }
@@ -28,6 +38,30 @@
 .active--link {
   color        : #3C6AF3 !important;
   border-bottom: 3px solid #3C6AF3;
+}
+
+.bg-transparents {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.scrollbar-custom {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ebebf2;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #f5faff;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #f5faff;
+  }
 }
 
 /* Pagination */
