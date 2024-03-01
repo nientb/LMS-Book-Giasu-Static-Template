@@ -1,10 +1,9 @@
 // LIST MENTOR
 const listMentorEl = document.getElementById("list-mentor");
 const paginationEl = document.getElementById("pagination");
-const popupEl = document.getElementById("popup");
+let popupEl = document.getElementById("popup");
 
 const mentors = window.mentors;
-
 if (mentors.length) {
   // PAGINATION
   const currPage = 1;
