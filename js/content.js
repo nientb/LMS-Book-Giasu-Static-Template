@@ -4,15 +4,24 @@ const navLinkEl = document.getElementById("nav-link");
 const contentMentorEl = document.getElementById("content-mentor");
 // const popupEl = document.getElementById("popup");
 
+let filterCoursesList = window.filterCoursesList;
+let courses = window.courses;
+let newCourses = [...courses];
+let newMentor = [...mentors];
 
-const courses = window.courses;
-console.log(mentors);
-// const mentors = window.mentors;
-let limitCourse = 8;
+let limitCourse = 6;
 let limitMentor = 3;
 let mode;
+let valueCourse = '';
+let valueMentor = '';
 
-// CREATE NAVBAR LINK
+// VALUE SEARCH FORM
+let chooseCourse;
+let chooseMentor;
+let startDate;
+let endDate;
+
+///////////////////////////////// CREATE NAVBAR LINK ///////////////////////////////////////////////
 const contentNavlink = () => {
   const navLinks = ["Đăng ký môn học", "Đặt lịch", "Lịch học"];
   navLinkEl.innerHTML = "";
@@ -36,40 +45,42 @@ function onClick(e, index) {
   switch (index) {
     case 0:
       if (contentMentorEl.classList.contains("hidden")) {
-        contentMentorEl.classList.remove("hidden");
+        contentMentorEl.classList.add("md:block");
       }
       if (contentEl.classList.contains("w-full")) {
-        contentMentorEl.classList.add("w-2/3");
+        contentMentorEl.classList.add("w-2/5");
       }
       contentRegister();
       break;
     case 1:
       if (contentMentorEl.classList.contains("hidden")) {
-        contentMentorEl.classList.remove("hidden");
+        contentMentorEl.classList.add("md:block");
       }
       if (contentEl.classList.contains("w-full")) {
-        contentMentorEl.classList.add("w-2/3");
+        contentMentorEl.classList.add("w-2/5");
       }
       bookLearn();
       break;
     case 2:
+      contentMentorEl.classList.remove("md:block");
       contentMentorEl.classList.add("hidden");
+      contentEl.classList.remove("md:w-3/5");
       contentEl.classList.add("w-full");
       scheduleLearn();
       break;
     default:
       if (contentMentorEl.classList.contains("hidden")) {
-        contentMentorEl.classList.remove("hidden");
+        contentMentorEl.classList.add("md:block");
       }
       if (contentEl.classList.contains("w-full")) {
-        contentMentorEl.classList.add("w-2/3");
+        contentMentorEl.classList.add("w-2/5");
       }
       contentRegister();
       break;
   }
 }
 
-// Register course
+////////////////////////////////// CREATE REGISTER COURSE /////////////////////////////////////////
 const contentRegister = () => {
   const courses = window.courses;
   function renderRegister() {
@@ -100,28 +111,39 @@ const contentRegister = () => {
   }
 };
 
-// BOOK CALENDER
+//////////////////////// CREATE BOOK CALENDER ///////////////////////////////////
 const bookLearn = () => {
   contentEl.innerHTML = "";
   contentEl.innerHTML = `
     <div class="w-5/6 p-6 rounded-lg bg-[#FAFAFA]">
-      <form class="flex flex-col gap-4">
+      <form class="flex flex-col gap-4" onsubmit='onSearch(event)'>
         <div class="italic">Học viên có thể đăng ký học thử, đặt lịch trực tiếp với gia sư theo ý thích. </div>
         <div class="flex justify-between items-center">
           <label class="font-semibold flex-auto">Chọn môn học <span class="text-[red]">*</span></label>
           <div class="bg-white py-2 px-4 rounded-md flex" onclick='onSelectCourse(event)'>
-            <input class="w-[300px] bg-white" disabled  type="text" name="course" placeholder="Danh sách môn học" />
+            <input class="w-[300px] bg-white" disabled value='${valueCourse}' type="text" name="course" placeholder="Danh sách môn học" />
             <button class="bg-primary py-1 px-2 rounded text-white hover:opacity-70">Chọn</button>
           </div>
         </div>
         <div class="flex justify-between items-center">
           <label class="font-semibold">Chọn ngày</label>
-          <input type="text" name="course" placeholder="Danh sách môn học" />
+          <div class="flex items-center gap-1">
+            <span>Từ</span>
+            <div class="flex items-center p-2 rounded-md border w-36 bg-white mr-1">
+              <input id="flatpickr-start" class="outline-none w-28" onfocus="onSelectedDateStart(event)" type="text">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+            <span>Đến ngày</span>
+            <div class="flex items-center p-2 rounded-md border w-36 bg-white">
+              <input class="w-28 outline-none" onfocus="onSelectedDateEnd(event)" type="text">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+          </div>
         </div>
         <div class="flex justify-between items-center">
           <label class="font-semibold flex-auto">Chọn gia sư</label>
           <div class="bg-white py-2 px-4 rounded-md flex" onclick='onSelectMentor(event)'>
-            <input class="w-[300px] disabled bg-white" disabled type="text" name="mentor" placeholder="Chọn gia sư" />
+            <input class="w-[300px] disabled bg-white" disabled type="text" name="mentor" value='${valueMentor}' placeholder="Chọn gia sư" />
             <button class="bg-primary py-1 px-2 rounded text-white hover:opacity-70">Chọn</button>
           </div>
         </div>
@@ -134,6 +156,35 @@ const bookLearn = () => {
   `;
 };
 
+// CHOOSE DATE
+let minDate;
+function onSelectedDateStart(e) {
+  flatpickr(e.target, {
+    dateFormat: 'd-m-Y',
+    altInput: true,
+    altFormat: "d/m/Y",
+    minDate: "today",
+    onChange: function (selectedDates, dateStr, instance) {
+      console.log(dateStr, instance, selectedDates);
+      startDate = selectedDates;
+      minDate = dateStr;
+    },
+  }).open();
+}
+
+function onSelectedDateEnd(e) {
+  flatpickr(e.target, {
+    dateFormat: 'd-m-Y',
+    altInput: true,
+    altFormat: "d/m/Y",
+    minDate: minDate,
+    onChange: function (selectedDates, dateStr, instance) {
+      endDate = selectedDates;
+    },
+  }).open();
+}
+
+// MODE POPUP
 function onSelectCourse(e) {
   e.preventDefault();
   mode = 'COURSE';
@@ -147,7 +198,7 @@ function onSelectMentor(e) {
 }
 
 
-// SCHEDULE
+////////////////////// CREATE SCHEDULE ////////////////////////////
 const scheduleLearn = () => {
   const schedules = window.schedules;
   contentEl.innerHTML = "";
@@ -226,12 +277,14 @@ const scheduleLearn = () => {
   }
 };
 
-// CREATE POPUP
-if (courses.length && mentors.length) {
+
+/////////////////// CREATE POPUP ////////////////////
+if (newCourses.length && mentors.length) {
   let page = 1;
   // // CREATE POPUP WITH COURSE LIST
   function coursePopup() {
-    const totalPage = Math.ceil(courses.length / limitCourse);
+    newCourses = [...courses];
+    const totalPage = Math.ceil(newCourses.length / limitCourse);
     if (popupEl.classList.contains('hidden')) {
       popupEl.classList.remove('hidden');
     }
@@ -260,7 +313,7 @@ function listCourse(data) {
         <h3 class="text-lg font-semibold">${course.name}</h3>
         <p class="text-sm text-slate-800 w-[150px] text-ellipsis overflow-hidden h-[40px]">${course.description}</p>
       </div>
-      <div class="basic-1/5"><button class="bg-primary text-white py-1 px-4 rounded">Chọn</button></div>
+      <div class="basic-1/5"><button onclick='onChooseCourse(${JSON.stringify(course)})' class="bg-primary text-white py-1 px-4 rounded">Chọn</button></div>
     </li>
     `;
   })
@@ -271,37 +324,51 @@ function listMentor(data) {
   let content = '';
   data.forEach(mentor => {
     content += `
-    <li class="flex items-center justify-start w-fit gap-5 border border-slate-200 rounded-md">
-      <div class="">
-        <img class="w-[100px] rounded-md" src="${mentor.picture}" alt="${mentor.name}" />
+    <li class="flex items-center justify-start w-fit gap-8 border border-slate-200 rounded-md">
+      <div class="w-[90px]">
+        <img class="w-full rounded-md" src="${mentor.picture}" alt="${mentor.name}" />
       </div>
       <div class="">
         <h3 class="text-lg font-semibold">${mentor.name}</h3>
         <p class="text-sm text-slate-800 text-ellipsis overflow-hidden max-h-[40px]">${mentor.workPlace}</p>
         <span class="text-md font-semibold text-[#8D939E]">Mã gia sư: ${mentor.code}</span>
       </div>
-      <div class="basic-1/5 pr-4"><button class="bg-primary text-white py-1 px-4 rounded">Chọn</button></div>
+      <div class="basic-1/5 pr-4"><button onclick='onChooseMentor(${JSON.stringify(mentor)})' class="bg-primary text-white py-1 px-4 rounded">Chọn</button></div>
     </li>
     `;
   })
   return content;
 }
 
-// CREATE PAGINATION
+// CHOOSE MENTOR
+function onChooseMentor(mentor) {
+  chooseMentor = mentor;
+  valueMentor = `${mentor.code} - ${mentor.name}`;
+  onClose()
+  bookLearn();
+}
+// CHOOSE COURSE
+function onChooseCourse(course) {
+  chooseCourse = course;
+  valueCourse = course.name;
+  onClose()
+  bookLearn();
+}
+
+// RENDER POPUP
 function createdPagination(totalPages, page) {
-  console.log(mode);
   window.scrollTo(0, 0);
   let result = []
   if (mode === 'MENTOR') {
     const startPage = (page - 1) * limitMentor;
     const endPage = page * limitMentor;
-    const data = mentors.slice(startPage, endPage);
+    const data = newMentor.slice(startPage, endPage);
     result.push(...data);
   }
   if (mode === 'COURSE') {
     const startPage = (page - 1) * limitCourse;
     const endPage = page * limitCourse;
-    const data = courses.slice(startPage, endPage);
+    const data = newCourses.slice(startPage, endPage);
     result.push(...data);
   }
     
@@ -364,13 +431,27 @@ function createdPagination(totalPages, page) {
   
   // UPDATE POPUP ELEMENT
   if (mode === 'COURSE') {
-    console.log(result);
 
     popupEl.innerHTML = `
       <div class="w-6/12 h-5/6 relative py-10 px-12 mt-[60px] m-auto gap-6 bg-white rounded">
         <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-solid fa-xmark"></i></div>
         <div>
           <h2 class="text-2xl font-bold border-l-2 border-solid border-black pl-2">Chọn môn học</h2>
+          <div class="relative min-w-[200px] group my-6 py-1 px-4 border rounded-xl w-[200px]">
+            <div class="py-1 px-2 rounded w-full flex items-center justify-between cursor-pointer bg-white gap-4">
+              <span class="text-black text-md font-semibold" id="showCourse">
+                - Lọc theo môn -
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M9 1L5 5L1 1" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="opacity-0 invisible group-hover:opacity-100 group-hover:visible rounded bg-white absolute top-[100%] left-0 right-0 z-50 max-h-[300px] shadow transition overflow-y-auto">
+              ${filterCoursesList.map(item => {
+                return `<div onclick='onFilterCourse(${JSON.stringify(item)})' class="py-1 px-2 text-black cursor-pointer hover:bg-[#0417764d] text-black">${item.toString()}</div>`
+              }).join('')}
+            </div>
+          </div>
         </div>
         <ul class="grid grid-cols-2 gap-8">
           ${listCourse(result)}
@@ -385,15 +466,19 @@ function createdPagination(totalPages, page) {
   }
   if (mode === 'MENTOR') {
     popupEl.innerHTML = `
-      <div class="relative w-6/12 h-5/6 relative py-10 px-12 mt-[60px] m-auto gap-6 bg-white rounded">
+      <div class="relative w-6/12 h-5/6 relative py-6 px-12 mt-[60px] m-auto gap-6 bg-white rounded">
         <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-solid fa-xmark"></i></div>
         <div>
-          <h2 class="text-2xl font-bold border-l-2 border-solid border-black pl-2">Chọn gia sư</h2>
+          <h2 class="text-2xl font-bold border-l-2 border-solid border-black pl-2">Chọn giáo viên gia sư</h2>
+          <div class="w-80 rounded-xl border py-2 px-2 my-3">
+            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+            <input oninput="onSearchMentor(event)" class="outline-none w-64 ml-2" type="text" placeholder="Tìm theo tên/mã gia sư" name="search" />
+          </div>
         </div>
         <ul class="flex flex-col gap-4">
           ${listMentor(result)}
         </ul>
-        <div class="pagination mt-8">
+        <div class="pagination mt-6">
           <ul>
             ${liTag}
           </ul>
@@ -403,8 +488,66 @@ function createdPagination(totalPages, page) {
   }
 }
 
+// FILTER COURSE
+function onFilterCourse(name) {
+  const updateCourse = newCourses.filter(course => {
+    if (removeAccents(course.name.toLowerCase()).includes(removeAccents(name.toLowerCase()))) {
+      return course;
+    }
+  });
+  newCourses = updateCourse;
+  const totalPage = Math.ceil(newCourses.length / limitCourse);
+  createdPagination(totalPage, 1)
+  newCourses = [...courses];
+}
+
+// SEARCH MENTOR
+let timeoutId;
+let previousValue = '';
+function onSearchMentor(e) {
+  clearTimeout(timeoutId);
+
+  const searchInput = removeAccents(e.target.value.toLowerCase());
+  timeoutId = setTimeout(() => {
+    if (searchInput !== previousValue) {
+      const updateMentor = newMentor.filter(mentor => {
+        if (removeAccents(mentor.name.toLowerCase()).includes(searchInput)) {
+          return mentor
+        }
+      });
+      newMentor = updateMentor;
+      const totalPage = Math.ceil(newMentor.length / limitMentor);
+      createdPagination(totalPage, 1)
+      newMentor = [...mentors]
+      previousValue = searchInput;
+    }
+  }, 1000)
+}
+
+// HANDLE SEARCH
+function onSearch(e) {
+  e.preventDefault();
+  if (!chooseCourse) {
+    return;
+  }
+  const data = {
+    date: {
+      start: startDate,
+      end: endDate
+    },
+    mentor: chooseMentor,
+    course: chooseCourse
+  }
+  console.log(data);
+}
+
+///////////////////// UTIL ///////////////////////////
 function onClose () {
   popupEl.classList.add('hidden');
+}
+function removeAccents(str) {
+  const updateStr = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return updateStr;
 }
 
 // INITIAL

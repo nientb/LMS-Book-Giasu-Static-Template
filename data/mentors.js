@@ -1,7 +1,7 @@
 window.mentors = [
   {
     name: "Nguyễn Minh Phương",
-    workPlace: "Trường THCS Bình Minh, TP Hải Dương",
+    workPlace: "Trường THCS Bình Minh, TP Hải Dương Trường THCS Bình Minh, TP Hải Dương",
     description:
       "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.  Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
     color: ["#4B75EF", "#6a7cb1"],
@@ -11,7 +11,7 @@ window.mentors = [
     degree: "Củ nhân",
   },
   {
-    name: "Nguyễn Minh Phương",
+    name: "Truong Minh Phương",
     workPlace: "Trường THCS Bình Minh, TP Hải Dương",
     description:
       "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức..",
@@ -22,7 +22,7 @@ window.mentors = [
     degree: "Củ nhân",
   },
   {
-    name: "Nguyễn Minh Phương",
+    name: "Lê Minh Phương",
     workPlace: "Trường THCS Bình Minh, TP Hải Dương",
     description:
       "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
@@ -44,7 +44,29 @@ window.mentors = [
     degree: "Củ nhân",
   },
   {
+    name: "Phạm Minh Phương",
+    workPlace: "Trường THCS Bình Minh, TP Hải Dương",
+    description:
+      "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
+    color: ["orange", "yellow"],
+    picture: "public/images/teacher.png",
+    course: "Sinh học",
+    code: "GS0035",
+    degree: "Củ nhân",
+  },
+  {
     name: "Nguyễn Minh Phương",
+    workPlace: "Trường THCS Bình Minh, TP Hải Dương",
+    description:
+      "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
+    color: ["orange", "yellow"],
+    picture: "public/images/teacher.png",
+    course: "Sinh học",
+    code: "GS0035",
+    degree: "Củ nhân",
+  },
+  {
+    name: "Hồ Minh Phương",
     workPlace: "Trường THCS Bình Minh, TP Hải Dương",
     description:
       "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
@@ -77,29 +99,7 @@ window.mentors = [
     degree: "Củ nhân",
   },
   {
-    name: "Nguyễn Minh Phương",
-    workPlace: "Trường THCS Bình Minh, TP Hải Dương",
-    description:
-      "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
-    color: ["orange", "yellow"],
-    picture: "public/images/teacher.png",
-    course: "Sinh học",
-    code: "GS0035",
-    degree: "Củ nhân",
-  },
-  {
-    name: "Nguyễn Minh Phương",
-    workPlace: "Trường THCS Bình Minh, TP Hải Dương",
-    description:
-      "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",
-    color: ["orange", "yellow"],
-    picture: "public/images/teacher.png",
-    course: "Sinh học",
-    code: "GS0035",
-    degree: "Củ nhân",
-  },
-  {
-    name: "Nguyễn Minh Phương",
+    name: "Trần Minh Phương",
     workPlace: "Trường THCS Bình Minh, TP Hải Dương",
     description:
       "Cô giáo Nguyễn Minh Phương là một giáo viên dạy môn Toán tại trường Trung học cơ sở Bình Minh. Cô giáo được đánh giá là một giáo viên nhiệt tình, tâm huyết và có trách nhiệm cao. Cô giáo luôn cố gắng tạo điều kiện thuận lợi nhất cho học sinh để họ có thể tiếp cận kiến thức một cách dễ dàng và hiệu quả nhất. Cô giáo Nguyễn Minh Phương có kiến thức chuyên môn sâu rộng và kỹ năng giảng dạy tốt. Cô giáo luôn cố gắng giúp đỡ học sinh phát triển tư duy, kỹ năng và phẩm chất đạo đức. Cô giáo Nguyễn Minh Phương là một trong những giáo viên tốt nhất tại trường Trung học cơ sở Bình Minh.",

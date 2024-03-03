@@ -3,7 +3,7 @@ const listMentorEl = document.getElementById("list-mentor");
 const paginationEl = document.getElementById("pagination");
 let popupEl = document.getElementById("popup");
 
-const mentors = window.mentors;
+let mentors = window.mentors;
 if (mentors.length) {
   // PAGINATION
   const currPage = 1;
@@ -133,7 +133,7 @@ function onDetailMentor(mentor) {
                 <img src="public/images/briefcase.png" alt="map" />
               </div>
               <div class="text-[12px]">Nơi công tác</div>
-              <div class="font-medium text-[14px]">${mentor.workPlace}</div>
+              <div class="font-medium max-h-[120px] text-ellipsis overflow-auto scrollbar-custom text-[14px]">${mentor.workPlace}</div>
             </div>
             <div class="flex-1 text-center">
               <div class="flex justify-center">
