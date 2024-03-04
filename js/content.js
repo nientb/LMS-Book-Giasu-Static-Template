@@ -12,7 +12,8 @@ let newMentor = [...mentors];
 let limitCourse = 6;
 let limitMentor = 3;
 if (window.innerWidth < 768) {
-  limitMentor = 5;
+  limitMentor = 4;
+  limitCourse = 4;
 }
 let mode;
 let valueCourse = '';
@@ -51,7 +52,7 @@ function onClick(e, index) {
         contentMentorEl.classList.add("md:block");
       }
       if (contentEl.classList.contains("w-full")) {
-        contentEl.classList.add("w-3/5");
+        contentEl.classList.add("md:w-3/5");
         contentMentorEl.classList.add("w-2/5");
       }
       contentRegister();
@@ -62,7 +63,7 @@ function onClick(e, index) {
       }
       if (contentEl.classList.contains("w-full")) {
         contentMentorEl.classList.add("w-2/5");
-        contentEl.classList.add("w-3/5");
+        contentEl.classList.add("md:w-3/5");
       }
       bookLearn();
       break;
@@ -152,9 +153,9 @@ const bookLearn = () => {
             <button class="bg-primary py-1 px-2 rounded text-sm md:text-base text-white hover:opacity-70">Chọn</button>
           </div>
         </div>
-        <div class="flex justify-between items-center">
-          <div class="text-sm md:text-base"><span class="text-[red]">*</span> Phần không được bỏ trống</div>
-          <div><button onclick='onBookSearch(event)' class="text-white text-sm md:text-base bg-primary py-1.5 md:py-2 px-6 md:px-12 hover:opacity-80 rounded-md">Tìm kiếm</button></div>
+        <div class="flex justify-end items-center">
+          <div id="message-error" class="hidden w-full text-sm md:text-base" text-slate-600><span class="text-[red]">*</span> Phần không được bỏ trống</div>
+          <div><button onclick='onBookSearch(event)' class="text-white whitespace-pre whitespace-nowrap text-sm md:text-base bg-primary py-1.5 md:py-2 px-6 md:px-12 hover:opacity-80 rounded-md">Tìm kiếm</button></div>
         </div>
 
         <div class="mt-8 hidden" id="show-book-course">
@@ -486,7 +487,7 @@ function createdPagination(totalPages, page) {
             </div>
           </div>
         </div>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-6">
           ${listCourse(result)}
         </ul>
         <div class="pagination mt-4">
@@ -508,10 +509,10 @@ function createdPagination(totalPages, page) {
             <input oninput="onSearchMentor(event)" class="text-sm md:text-base outline-none w-64 ml-2" type="text" placeholder="Tìm theo tên/mã gia sư" name="search" />
           </div>
         </div>
-        <ul class="flex flex-col gap-4">
+        <ul class="flex flex-col gap-2 md:gap-4">
           ${listMentor(result)}
         </ul>
-        <div class="pagination mt-4 md:mt-6">
+        <div class="pagination mt-3 md:mt-4">
           <ul>
             ${liTag}
           </ul>
@@ -561,6 +562,7 @@ function onSearchMentor(e) {
 function onBookSearch(e) {
   e.preventDefault();
   if (!chooseCourse) {
+    document.getElementById('message-error').classList.remove('hidden');
     return;
   }
   const data = {
