@@ -64,6 +64,13 @@
   }
 }
 
+.hidden-3dots {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 /* Pagination */
 .pagination {
   display        : flex;
