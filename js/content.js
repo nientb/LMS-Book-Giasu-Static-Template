@@ -51,6 +51,7 @@ function onClick(e, index) {
         contentMentorEl.classList.add("md:block");
       }
       if (contentEl.classList.contains("w-full")) {
+        contentEl.classList.add("w-3/5");
         contentMentorEl.classList.add("w-2/5");
       }
       contentRegister();
@@ -61,6 +62,7 @@ function onClick(e, index) {
       }
       if (contentEl.classList.contains("w-full")) {
         contentMentorEl.classList.add("w-2/5");
+        contentEl.classList.add("w-3/5");
       }
       bookLearn();
       break;
@@ -119,7 +121,7 @@ const bookLearn = () => {
   contentEl.innerHTML = "";
   contentEl.innerHTML = `
     <div class="w-full md:w-5/6 p-4 md:p-6 rounded-lg bg-[#FAFAFA]">
-      <form class="flex flex-col gap-4" onsubmit='onSearch(event)'>
+      <form class="flex flex-col gap-4" onsubmit='onSubmitBook(event)'>
         <div class="italic">Học viên có thể đăng ký học thử, đặt lịch trực tiếp với gia sư theo ý thích. </div>
         <div class="flex justify-between items-center">
           <label class="whitespace-nowrap font-semibold flex-auto text-sm md:text-base">Chọn môn học <span class="text-[red]">*</span></label>
@@ -152,7 +154,35 @@ const bookLearn = () => {
         </div>
         <div class="flex justify-between items-center">
           <div class="text-sm md:text-base"><span class="text-[red]">*</span> Phần không được bỏ trống</div>
-          <div><button class="text-white text-sm md:text-base bg-primary py-1.5 md:py-2 px-6 md:px-12 hover:opacity-80 rounded-md">Tìm kiếm</button></div>
+          <div><button onclick='onBookSearch(event)' class="text-white text-sm md:text-base bg-primary py-1.5 md:py-2 px-6 md:px-12 hover:opacity-80 rounded-md">Tìm kiếm</button></div>
+        </div>
+
+        <div class="mt-8 hidden" id="show-book-course">
+          <div class="text-sm md:text-base mb-2">Chọn thời gian phù hợp với bạn</div>
+          <table class="w-full">
+            <tr class="bg-primary text-white rounded-t-xl">
+              <th class="text-sm md:text-base py-2">Ngày</th>
+              <th class="text-sm md:text-base py-2">Thời gian</th>
+              <th class="text-sm md:text-base py-2">Select</th>
+            </tr>
+            <tr class="text-center even:bg-gray-100">
+              <td class="text-sm md:text-base py-2">14/04/2024</td>
+              <td class="text-sm md:text-base py-2">10:20 - 12:30 AM</td>
+              <td><input class="text-sm md:text-base py-2" type="checkbox" /></td>
+            </tr>
+            <tr class="text-center even:bg-gray-100">
+              <td class="text-sm md:text-base py-2">14/04/2024</td>
+              <td class="text-sm md:text-base py-2">10:20 - 12:30 AM</td>
+              <td><input class="text-sm md:text-base py-2" type="checkbox" /></td>
+            </tr>
+          </table>
+          <div class="text-sm md:text-base mt-6 mb-2">Gửi gám của phụ huynh</div>
+          <div>
+            <textarea class="w-full py-1 md:py-2 px-2 md:px-4 rounded-md border text-xs md:text-sm outline-none" rows="6" placeholder="Nếu có lời nhắn nhủ muốn gửi đến gia sư, phụ huynh hãy nhập tại đây" name="note"></textarea>
+          </div>
+          <div class="py-4 w-full text-end">
+            <button type="submit" class="text-sm md:text-base text-white bg-primary py-2 px-8 rounded-md hover:opacity-70">Đặt lịch</button>
+          </div>
         </div>
       </form>
     </div>
@@ -528,7 +558,7 @@ function onSearchMentor(e) {
 }
 
 // HANDLE SEARCH
-function onSearch(e) {
+function onBookSearch(e) {
   e.preventDefault();
   if (!chooseCourse) {
     return;
@@ -542,6 +572,14 @@ function onSearch(e) {
     course: chooseCourse
   }
   console.log(data);
+  document.getElementById('show-book-course').classList.remove('hidden')
+}
+
+// BOOK CALENDAR LEARN
+function onSubmitBook(e) {
+  e.preventDefault();
+  console.log(e);
+
 }
 
 ///////////////////// UTIL ///////////////////////////
