@@ -40,6 +40,13 @@
   border-bottom: 3px solid #3C6AF3;
 }
 
+.width-input-register {
+  width: calc(100% - 49px);
+}
+.width-input-register-date {
+  width: calc(100% - 18px);
+}
+
 .bg-transparents {
   background-color: rgba(0, 0, 0, 0.6);
 }

@@ -106,7 +106,7 @@ window.mentors = [
     color: ["orange", "yellow"],
     picture: "public/images/teacher.png",
     course: "Anh van",
-    code: "GS0035",
+    code: "GS0099",
     degree: "Củ nhân",
   },
   {

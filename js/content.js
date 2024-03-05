@@ -121,35 +121,35 @@ const contentRegister = () => {
 const bookLearn = () => {
   contentEl.innerHTML = "";
   contentEl.innerHTML = `
-    <div class="w-full md:w-5/6 p-4 md:p-6 rounded-lg bg-[#FAFAFA]">
+    <div class="w-full md:w-11/12 p-4 md:p-6 rounded-lg bg-[#FAFAFA]">
       <form class="flex flex-col gap-4" onsubmit='onSubmitBook(event)'>
         <div class="italic">Học viên có thể đăng ký học thử, đặt lịch trực tiếp với gia sư theo ý thích. </div>
-        <div class="flex justify-between items-center">
-          <label class="whitespace-nowrap font-semibold flex-auto text-sm md:text-base">Chọn môn học <span class="text-[red]">*</span></label>
-          <div class="bg-white py-1 md:py-2 px-2 md:px-4 rounded-md flex" onclick='onSelectCourse(event)'>
-            <input class="w-[130px] md:w-[300px] text-sm md:text-base bg-white text-ellipsis" disabled value='${valueCourse}' type="text" name="course" placeholder="Danh sách môn học" />
+        <div class="flex justify-start items-center gap-2 md:gap-8">
+          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto whitespace-nowrap font-semibold text-sm md:text-base">Chọn môn học <span class="text-[red]">*</span></label>
+          <div class="w-full flex justify-between bg-white py-1 md:py-2 px-2 md:px-4 rounded-md" onclick='onSelectCourse(event)'>
+            <input class="width-input-register text-sm md:text-base bg-white text-ellipsis" disabled value='${valueCourse}' type="text" name="course" placeholder="Danh sách môn học" />
             <button class="bg-primary py-1 px-2 text-sm md:text-base rounded text-white hover:opacity-70">Chọn</button>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <label class="font-semibold text-sm md:text-base whitespace-nowrap">Chọn ngày</label>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-8">
+          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto font-semibold text-sm md:text-base whitespace-nowrap">Chọn ngày</label>
           <div class="flex items-center gap-1">
-            <span class="text-sm md:text-base">Từ</span>
-            <div class="flex items-center p-1 md:p-2 rounded-md border w-28 md:w-36 bg-white mr-1">
-              <input class="outline-none w-24 text-sm md:text-base md:w-28" onfocus="onSelectedDateStart(event)" type="text">
+            <span class="text-xs md:text-sm">Từ</span>
+            <div class="flex items-center w-auto p-1 md:p-2 rounded-md border bg-white mr-1 grow-1 shrink-1 basis-auto">
+              <input class="width-input-register-date outline-none text-sm md:text-base" onfocus="onSelectedDateStart(event)" type="text">
               <i class="hidden md:block fa-regular fa-calendar"></i>
             </div>
-            <span class="text-sm md:text-base whitespace-nowrap">Đến ngày</span>
-            <div class="flex items-center p-2 rounded-md border w-28 md:w-36 bg-white">
-              <input class="w-24 md:w-28 text-sm md:text-base outline-none" onfocus="onSelectedDateEnd(event)" type="text">
+            <span class="text-xs md:text-sm whitespace-nowrap">Đến ngày</span>
+            <div class="flex items-center w-auto  p-2 rounded-md border bg-white grow-1 shrink-1 basis-auto">
+              <input class="width-input-register-date text-sm md:text-base outline-none" onfocus="onSelectedDateEnd(event)" type="text">
               <i class="hidden md:block fa-regular fa-calendar"></i>
             </div>
           </div>
         </div>
-        <div class="flex justify-between items-center">
-          <label class="font-semibold text-sm md:text-base flex-auto whitespace-nowrap">Chọn gia sư</label>
-          <div class="bg-white py-1 md:py-2 px-2 md:px-4 rounded-md flex" onclick='onSelectMentor(event)'>
-            <input class="w-[130px] md:w-[300px] text-sm md:text-base disabled bg-white text-ellipsis" disabled type="text" name="mentor" value='${valueMentor}' placeholder="Chọn gia sư" />
+        <div class="flex justify-between items-center gap-2 md:gap-8">
+          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto font-semibold text-sm md:text-base flex-auto whitespace-nowrap">Chọn gia sư</label>
+          <div class="w-full flex justify-between bg-white py-1 md:py-2 px-2 md:px-4 rounded-md flex" onclick='onSelectMentor(event)'>
+            <input class="width-input-register text-sm md:text-base disabled bg-white text-ellipsis" disabled type="text" name="mentor" value='${valueMentor}' placeholder="Chọn gia sư" />
             <button class="bg-primary py-1 px-2 rounded text-sm md:text-base text-white hover:opacity-70">Chọn</button>
           </div>
         </div>
@@ -339,15 +339,15 @@ function listCourse(data) {
   let content = '';
   data.forEach(course => {
     content += `
-    <li class="flex justify-between items-center gap-4">
+    <li class="flex justify-between items-center gap-2">
       <div class="basic-1/5 grow-0 shrink-0 basis-auto">
         <img class="w-[80px]" src="${course.picture}" alt="${course.name}" />
       </div>
       <div class="basic-3/5">
         <h3 class="text-md md:text-lg font-semibold">${course.name}</h3>
-        <p class="text-sm text-slate-800 w-[150px] text-ellipsis overflow-hidden h-[40px]">${course.description}</p>
+        <p class="text-sm text-slate-800 text-ellipsis overflow-hidden h-[40px]">${course.description}</p>
       </div>
-      <div class="basic-1/5"><button onclick='onChooseCourse(${JSON.stringify(course)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded">Chọn</button></div>
+      <div class="basic-1/5"><button onclick='onChooseCourse(${JSON.stringify(course)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded hover:opacity-80">Chọn</button></div>
     </li>
     `;
   })
@@ -358,7 +358,7 @@ function listMentor(data) {
   let content = '';
   data.forEach(mentor => {
     content += `
-    <li class="flex items-center justify-start w-fit gap-4 md:gap-8 border border-slate-200 rounded-md">
+    <li class="flex items-center justify-start w-full md:w-11/12 gap-2 md:gap-8 border border-slate-200 rounded-md">
       <div class="w-[90px] grow-0 shrink-0 basis-auto">
         <img class="w-full rounded-md" src="${mentor.picture}" alt="${mentor.name}" />
       </div>
@@ -367,7 +367,7 @@ function listMentor(data) {
         <p class="text-sm text-slate-800 text-ellipsis overflow-hidden max-h-[40px]">${mentor.workPlace}</p>
         <span class="text-md font-semibold text-[#8D939E]">Mã gia sư: ${mentor.code}</span>
       </div>
-      <div class="basic-1/5 pr-4"><button onclick='onChooseMentor(${JSON.stringify(mentor)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded">Chọn</button></div>
+      <div class="flex justify-end grow pr-4 hover:opacity-80"><button onclick='onChooseMentor(${JSON.stringify(mentor)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded">Chọn</button></div>
     </li>
     `;
   })
@@ -482,7 +482,7 @@ function createdPagination(totalPages, page) {
             </div>
             <div class="opacity-0 invisible group-hover:opacity-100 group-hover:visible rounded bg-white absolute top-[100%] left-0 right-0 z-50 max-h-[300px] shadow transition overflow-y-auto">
               ${filterCoursesList.map(item => {
-                return `<div onclick='onFilterCourse(${JSON.stringify(item)})' class="py-1 px-2 text-sm md:text-base text-black cursor-pointer hover:bg-[#0417764d] text-black">${item.toString()}</div>`
+                return `<div onclick='onFilterCourse(${JSON.stringify(item)})' class="py-1 px-2 text-sm md:text-base text-black cursor-pointer hover:bg-[#0417764d] text-black">${item.toString() === 'All' ? 'Tất cả' : item.toString()}</div>`
               }).join('')}
             </div>
           </div>
@@ -509,8 +509,8 @@ function createdPagination(totalPages, page) {
             <input oninput="onSearchMentor(event)" class="text-sm md:text-base outline-none w-64 ml-2" type="text" placeholder="Tìm theo tên/mã gia sư" name="search" />
           </div>
         </div>
-        <ul class="flex flex-col gap-2 md:gap-4">
-          ${listMentor(result)}
+        <ul class="flex flex-col gap-2 md:gap-4" id="list-mentor-popup">
+          ${result.length ? listMentor(result) : '<li class="h-screen mt-28 text-center italic"><div>Không tìm thấy gia sư phù hợp!</div></li>'}
         </ul>
         <div class="pagination mt-3 md:mt-4">
           <ul>
@@ -524,11 +524,16 @@ function createdPagination(totalPages, page) {
 
 // FILTER COURSE
 function onFilterCourse(name) {
-  const updateCourse = newCourses.filter(course => {
-    if (removeAccents(course.name.toLowerCase()).includes(removeAccents(name.toLowerCase()))) {
-      return course;
-    }
-  });
+  let updateCourse;
+  if (name.toLowerCase() === 'all') {
+    updateCourse = [...courses];
+  } else {
+    updateCourse = newCourses.filter(course => {
+      if (removeAccents(course.name.toLowerCase()).includes(removeAccents(name.toLowerCase()))) {
+        return course;
+      }
+    });
+  }
   newCourses = updateCourse;
   const totalPage = Math.ceil(newCourses.length / limitCourse);
   createdPagination(totalPage, 1)
@@ -545,7 +550,7 @@ function onSearchMentor(e) {
   timeoutId = setTimeout(() => {
     if (searchInput !== previousValue) {
       const updateMentor = newMentor.filter(mentor => {
-        if (removeAccents(mentor.name.toLowerCase()).includes(searchInput)) {
+        if (removeAccents(mentor.name.toLowerCase()).includes(searchInput) || removeAccents(mentor.code.toLowerCase()).includes(searchInput)) {
           return mentor
         }
       });
@@ -555,7 +560,7 @@ function onSearchMentor(e) {
       newMentor = [...mentors]
       previousValue = searchInput;
     }
-  }, 1000)
+  }, 1400)
 }
 
 // HANDLE SEARCH

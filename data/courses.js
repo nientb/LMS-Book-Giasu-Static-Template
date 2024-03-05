@@ -1,4 +1,4 @@
-window.filterCoursesList = ['Toán', 'Tiếng Anh', 'Lập trình'];
+window.filterCoursesList = ['All','Toán', 'Tiếng Anh', 'Lập trình'];
 
 window.courses = [
   {
