@@ -32,7 +32,12 @@
 }
 
 .box-shadow--bottom {
-  box-shadow: 0px 40px 32px -30px #ccdefc;
+  box-shadow: 0px 26px 25px -10px #ccdefc !important;
+}
+
+.show-active::before {
+  background-color: #0d7dfc !important;
+  border-radius: 100%;
 }
 
 .active--link {

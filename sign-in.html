@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= , initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3C6AF3",
+            },
+            boxShadow: {
+              'bottom': '0px 25px 90px -57px #1069fe',
+            }
+          },
+        },
+      };
+    </script>
+</head>
+<body class="h-screen overflow-hidden">
+  <main class="flex flex-col md:flex-row justify-center gap-8">
+    <div class="h-fit md:h-screen relative">
+      <img src="./public/images/Learn-funix.png" alt="student" class="h-full">
+      <div class="hidden md:flex flex-col gap-2 absolute left-0 right-0 bottom-0 z-50 text-white pb-20 pl-8">
+        <h1 class="text-5xl uppercase italic font-extrabold">học gia sư</h1>
+        <h1 class="text-5xl uppercase italic font-extrabold">toàn diện 1:1</h1>
+        <h4 class="text-3xl font-semibold italic text-right pr-[90px]">Chỉ từ 66k/giờ</h4>
+      </div>
+      <div class="absolute top-[50%] right-0 left-0 bottom-0 z-40  bg-gradient-to-b from-transparent to-primary"></div>
+    </div>
+
+    <div class="absolute md:relative w-full md:w-fit z-50 bottom-0 text-center self-end mb-2 md:mb-4 p-[20px] md: p-0">
+      <div class="hidden md:flex justify-center mb-16">
+        <img src="./public/images/Logo-FUNiX.png" alt="logo">
+      </div>
+      <div class="p-6 md:p-8 shadow-bottom bg-white rounded">
+        <div class="font-bold text-xl md:text-2xl">Đăng nhập hệ thống đặt lịch</div>
+        <div class="font-bold text-xl md:text-2xl">gia sư 1:1 by <span class="text-primary">FUNIX</span></div>
+        <div class="text-sm my-3 md:my-5">
+          <div>Đăng nhập để truy cập vào hệ thống đặt lịch và</div>
+          <div>tra cứu lịch học gia sư 1:1 của FUNiX </div>
+        </div>
+  
+        <form action="" onsubmit="submitForm(event)">
+          <div class="flex justify-start items-center gap-2 bg-white py-2 px-3 border rounded-md">
+            <img class="grow-0 shrink-0 basis-1 h-[14px]" src="./public/vectors/user-vector.png" alt="user">
+            <input class="w-full md:w-80 text-sm md:text-base outline-none" type="text" name="username" placeholder="Tên đang nhập hoặc số điện thoại">
+          </div>
+          <div class="flex justify-start items-center gap-2 bg-white py-2 px-3 border rounded-md my-4">
+            <img class="grow-0 shrink-0 basis-1 h-[14px]" src="./public//vectors/password-vector.png" alt="lock">
+            <input class="w-full md:w-80 text-sm md:text-base outline-none" type="password" name="password" placeholder="Mật khẩu">
+          </div>
+          <div class="flex justify-between text-xs md:text-sm">
+            <div class="flex items-center">
+              <i class="fa-regular fa-circle text-xs cursor-pointer pr-2" id="show-password"></i>
+              <p>Hiện thị mật khẩu</p>
+            </div>
+            <div class="text-primary cursor-pointer">Quên mật khẩu</div>
+          </div>
+          <div class="relative mt-8 md:mt-12 mb-4">
+            <div id="error-message" class="absolute top-[-25px] left-0 text-xs text-red-500 italic"></div>
+            <button type="submit" id="btn" disabled class="bg-primary text-white w-full py-2 font-semibold rounded-md hover:bg-sky-700 disabled:opacity-75 disabled:pointer-events-none">Đăng nhập</button>
+          </div>
+          <div class="text-xs md:text-sm flex justify-center items-center gap-2"><p>Bạn chưa có tài khoản?</p><span><a class="text-primary text-xs md:text-sm" href="./register.html">Đăng ký</a></span></div>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+
+<script src="./js/form/signIn.js"></script>
+</html>
