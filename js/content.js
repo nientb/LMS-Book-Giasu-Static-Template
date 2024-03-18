@@ -6,6 +6,7 @@ const contentMentorEl = document.getElementById("content-mentor");
 
 let filterCoursesList = window.filterCoursesList;
 let courses = window.courses;
+let schedules = window.schedules;
 let newCourses = [...courses];
 let newMentor = [...mentors];
 
@@ -18,12 +19,16 @@ if (window.innerWidth < 768) {
 let mode;
 let valueCourse = '';
 let valueMentor = '';
+let valueInputStartDate = '';
+let valueInputEndDate = '';
 
 // VALUE SEARCH FORM
-let chooseCourse;
+let chooseCourse = 'Chọn môn học';
 let chooseMentor;
 let startDate;
 let endDate;
+let bookTime;
+let messageINput = '';
 
 ///////////////////////////////// CREATE NAVBAR LINK ///////////////////////////////////////////////
 const contentNavlink = () => {
@@ -58,13 +63,10 @@ function onClick(e, index) {
       contentRegister();
       break;
     case 1:
-      if (contentMentorEl.classList.contains("hidden")) {
-        contentMentorEl.classList.add("md:block");
-      }
-      if (contentEl.classList.contains("w-full")) {
-        contentMentorEl.classList.add("w-2/5");
-        contentEl.classList.add("md:w-3/5");
-      }
+      contentMentorEl.classList.remove("md:block");
+      contentMentorEl.classList.add("hidden");
+      contentEl.classList.remove("md:w-3/5");
+      contentEl.classList.add("w-full");
       bookLearn();
       break;
     case 2:
@@ -118,72 +120,132 @@ const contentRegister = () => {
 };
 
 //////////////////////// CREATE BOOK CALENDER ///////////////////////////////////
+const renderCourses = (courses) => {
+  return courses.map(course => {
+    return `<div class="text-sm md:text-base option" onclick='onSelectCourse(event, ${JSON.stringify(course.name)})'>${course.name}</div>`;
+  }).join('');
+};
+
+const renderMentor = (mentors) => {
+  return mentors.map(mentor => {
+    return `<div class="cursor-pointer mb-4">
+    <div class="relative flex justify-center">
+      <img src="${mentor.picture}" alt="teacher" class="w-full">
+      <div onclick='onSelectMentor(event, ${JSON.stringify(mentor)})' class="absolute bottom-0 text-center px-10 py-1 text-white rounded-xl z-10 bg-slate-200 text-gray-500 hover:bg-primary hover:text-white">Chọn</div>
+    </div>
+    <div class="relative bg-white rounded px-2 pt-2 pb-2 text-center shadow-xl book-mentor info-after">
+      <div class="font-medium text-sm md:text-base">${mentor.name}</div>
+      <span class="text-lg font-semibold">-${mentor.code}-</span>
+    </div>
+  </div>`
+  }).join('')
+};
+
+const mentorSelected = () => {
+  if(!chooseMentor) return `<div></div>`;
+  return `<div class="cursor-pointer mb-4">
+    <div class="relative flex justify-center">
+      <img src="${chooseMentor.picture}" alt="teacher" class="w-full">
+      <div onclick='onSelectMentorAgain(event)' class="absolute bottom-0 text-center px-8 py-1 text-white rounded-xl z-10 bg-primary text-white hover:shadow">Chọn lại</div>
+    </div>
+    <div class="relative bg-white rounded px-2 pt-2 pb-2 text-center shadow-xl book-mentor info-after">
+      <div class="font-medium text-sm md:text-base">${chooseMentor.name}</div>
+      <span class="text-lg font-semibold">-${chooseMentor.code}-</span>
+    </div>
+  </div>`;
+};
+
+let isMobile = false; //change selected mentor when at mobile surface
+
+const renderBooked = () => {
+  const currDate = new Date();
+  const date = currDate.getDate();
+  const month = currDate.getMonth() + 1;
+  const year = currDate.getFullYear();
+  return schedules.map(i => {
+    return `<div class="flex justify-around items-center text-center even:bg-gray-100">
+      <div class="text-sm md:text-base py-2">${date >= 10 ? date : '0' + date}/${month >= 10 ? month : '0' + month}/${year}</div>
+      <div class="text-sm md:text-base py-2">${i.hours}</div>
+      <div onclick='onCheckedDate(event, ${JSON.stringify(i)})' class="cursor-pointer select-date">
+        <svg width="15" height="15" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.56074 17.8922C14.221 17.8922 17.9989 14.1143 17.9989 9.45405C17.9989 4.7938 14.221 1.01591 9.56074 1.01591C4.90049 1.01591 1.1226 4.7938 1.1226 9.45405C1.1226 14.1143 4.90049 17.8922 9.56074 17.8922ZM9.56074 18.8849C14.7693 18.8849 18.9916 14.6626 18.9916 9.45405C18.9916 4.24553 14.7693 0.0231934 9.56074 0.0231934C4.35222 0.0231934 0.129883 4.24553 0.129883 9.45405C0.129883 14.6626 4.35222 18.8849 9.56074 18.8849Z" fill="black"/>
+        </svg>
+      </div>
+    </div>`
+  }).join('')
+}
+    
+
 const bookLearn = () => {
   contentEl.innerHTML = "";
   contentEl.innerHTML = `
-    <div class="w-full md:w-11/12 p-4 md:p-6 rounded-lg bg-[#FAFAFA]">
-      <form class="flex flex-col gap-4" onsubmit='onSubmitBook(event)'>
-        <div class="italic">Học viên có thể đăng ký học thử, đặt lịch trực tiếp với gia sư theo ý thích. </div>
-        <div class="flex justify-start items-center gap-2 md:gap-8">
-          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto whitespace-nowrap font-semibold text-sm md:text-base">Chọn môn học <span class="text-[red]">*</span></label>
-          <div class="w-full flex justify-between bg-white py-1 md:py-2 px-2 md:px-4 rounded-md" onclick='onSelectCourse(event)'>
-            <input class="width-input-register text-sm md:text-base bg-white text-ellipsis" disabled value='${valueCourse}' type="text" name="course" placeholder="Danh sách môn học" />
-            <button class="bg-primary py-1 px-2 text-sm md:text-base rounded text-white hover:opacity-70">Chọn</button>
+    <div class="w-full p-0 md:p-6 rounded-lg bg-white">
+      <form class="flex flex-col justify-start md:justify-center items-center gap-2 md:gap-4" onsubmit='onSubmitBook(event)' id="formId">
+        <div class="w-full">
+          <div class="flex items-center justify-start md:justify-center gap-5">
+            <div class="text-base font-semibold">Đặt lịch môn</div>
+            <div class="w-[220px] md:min-w-[250px] form-selects">
+              <div class="form-select border-2 rounded-lg">
+                <span class="w-[100px] md:w-[115px] grow-0 shrink-0 basis-auto whitespace-nowrap font-semibold text-sm md:text-base">${chooseCourse}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M9 1L5 5L1 1" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="form-options">
+                ${renderCourses(newCourses)}
+              </div>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-8">
-          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto font-semibold text-sm md:text-base whitespace-nowrap">Chọn ngày</label>
+        <div class="italic">Học viên có thể đăng ký học thử, đặt lịch trực tiếp với gia sư theo ý thích. </div>
+        <div class="flex flex-col max-w-[500px] md:flex-row justify-start md:justify-between items-start md:items-center gap-2 md:gap-4">
+          <label class="w-fit grow-0 shrink-0 basis-auto font-semibold text-base whitespace-nowrap">Chọn ngày</label>
           <div class="flex items-center gap-1">
             <span class="text-xs md:text-sm">Từ</span>
             <div class="flex items-center w-auto p-1 md:p-2 rounded-md border bg-white mr-1 grow-1 shrink-1 basis-auto">
-              <input class="width-input-register-date outline-none text-sm md:text-base" onfocus="onSelectedDateStart(event)" type="text">
+              <input class="width-input-register-date outline-none text-sm md:text-base" value="${valueInputStartDate}" onfocus="onSelectedDateStart(event)" type="text">
               <i class="hidden md:block fa-regular fa-calendar"></i>
             </div>
             <span class="text-xs md:text-sm whitespace-nowrap">Đến ngày</span>
             <div class="flex items-center w-auto  p-2 rounded-md border bg-white grow-1 shrink-1 basis-auto">
-              <input class="width-input-register-date text-sm md:text-base outline-none" onfocus="onSelectedDateEnd(event)" type="text">
+              <input class="width-input-register-date text-sm md:text-base outline-none" value="${valueInputEndDate}" onfocus="onSelectedDateEnd(event)" type="text">
               <i class="hidden md:block fa-regular fa-calendar"></i>
             </div>
           </div>
         </div>
-        <div class="flex justify-between items-center gap-2 md:gap-8">
-          <label class="w-[110px] md:w-[115px] grow-0 shrink-0 basis-auto font-semibold text-sm md:text-base flex-auto whitespace-nowrap">Chọn gia sư</label>
-          <div class="w-full flex justify-between bg-white py-1 md:py-2 px-2 md:px-4 rounded-md flex" onclick='onSelectMentor(event)'>
-            <input class="width-input-register text-sm md:text-base disabled bg-white text-ellipsis" disabled type="text" name="mentor" value='${valueMentor}' placeholder="Chọn gia sư" />
-            <button class="bg-primary py-1 px-2 rounded text-sm md:text-base text-white hover:opacity-70">Chọn</button>
-          </div>
-        </div>
-        <div class="flex justify-end items-center">
-          <div id="message-error" class="hidden w-full text-sm md:text-base" text-slate-600><span class="text-[red]">*</span> Phần không được bỏ trống</div>
-          <div><button onclick='onBookSearch(event)' class="text-white whitespace-pre whitespace-nowrap text-sm md:text-base bg-primary py-1.5 md:py-2 px-6 md:px-12 hover:opacity-80 rounded-md">Tìm kiếm</button></div>
-        </div>
 
-        <div class="mt-8 hidden" id="show-book-course">
-          <div class="text-sm md:text-base mb-2">Chọn thời gian phù hợp với bạn</div>
-          <table class="w-full">
-            <tr class="bg-primary text-white rounded-t-xl">
-              <th class="text-sm md:text-base py-2">Ngày</th>
-              <th class="text-sm md:text-base py-2">Thời gian</th>
-              <th class="text-sm md:text-base py-2">Select</th>
-            </tr>
-            <tr class="text-center even:bg-gray-100">
-              <td class="text-sm md:text-base py-2">14/04/2024</td>
-              <td class="text-sm md:text-base py-2">10:20 - 12:30 AM</td>
-              <td><input class="text-sm md:text-base py-2" type="checkbox" /></td>
-            </tr>
-            <tr class="text-center even:bg-gray-100">
-              <td class="text-sm md:text-base py-2">14/04/2024</td>
-              <td class="text-sm md:text-base py-2">10:20 - 12:30 AM</td>
-              <td><input class="text-sm md:text-base py-2" type="checkbox" /></td>
-            </tr>
-          </table>
-          <div class="text-sm md:text-base mt-6 mb-2">Gửi gám của phụ huynh</div>
+        <div class="w-full flex flex-col md:flex-row justify-between items-start gap-4 md:gap-8 mt-2 md:mt-5" id="show-book-course">
+          <div class="w-full max-h-[500px] md:max-h-[900px] bg-white md:bg-slate-50 rounded-lg p-0 md:p-7 overflow-y-auto overflow-x-hidden scrollbar-custom">
+            <div class="text-lg md:text-xl font-semibold mb-1 md:mb-2">Chọn gia sư</div>
+            <div class="${isMobile ? 'flex justify-center' : 'grid grid-cols-2'} mb-4">
+              ${mentorSelected()}
+              <div></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 bg-slate-50">
+              ${renderMentor(newMentor)}
+            </div>
+          </div>
+          <div class="w-full max-h-[500px] md:max-h-[900px] rounded-lg p-0 md:p-7 bg-white md:bg-slate-50 overflow-y-auto overflow-x-hidden scrollbar-custom">
+            <div class="text-lg md:text-xl font-semibold mb-2">Chọn thời gian phù hợp với bạn</div>
+            <div class="w-full flex flex-col border">
+              <div class="flex justify-between bg-primary text-white rounded-t-lg">
+                <div class="text-sm md:text-base py-2 ml-[65px]">Ngày</div>
+                <div class="text-sm md:text-base py-2">Thời gian</div>
+                <div class="text-sm md:text-base py-2 mr-[30px]">Select</div>
+              </div>
+              ${renderBooked()}
+            </div>
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="text-base font-semibold mt-3 md:mt-6 mb-2">Gửi gám của phụ huynh</div>
           <div>
-            <textarea class="w-full py-1 md:py-2 px-2 md:px-4 rounded-md border text-xs md:text-sm outline-none" rows="6" placeholder="Nếu có lời nhắn nhủ muốn gửi đến gia sư, phụ huynh hãy nhập tại đây" name="note"></textarea>
+            <textarea onchange='onInputMessage(event)' class="w-full py-1 md:py-2 px-2 md:px-4 rounded-md border text-sm md:text-base outline-none" rows="5" placeholder="Nếu có lời nhắn nhủ muốn gửi đến gia sư, phụ huynh hãy nhập tại đây" name="note"></textarea>
           </div>
-          <div class="py-4 w-full text-end">
-            <button type="submit" class="text-sm md:text-base text-white bg-primary py-2 px-8 rounded-md hover:opacity-70">Đặt lịch</button>
-          </div>
+        
+        </div>
+        <div class="py-4 w-full text-right md:text-center">
+          <button type="submit" class="text-sm md:text-base text-white bg-primary py-2 px-10 rounded-md hover:opacity-70">Đặt lịch</button>
         </div>
       </form>
     </div>
@@ -200,6 +262,7 @@ function onSelectedDateStart(e) {
     minDate: "today",
     onChange: function (selectedDates, dateStr, instance) {
       console.log(dateStr, instance, selectedDates);
+      valueInputStartDate = dateStr;
       startDate = selectedDates;
       minDate = dateStr;
     },
@@ -213,28 +276,59 @@ function onSelectedDateEnd(e) {
     altFormat: "d/m/Y",
     minDate: minDate,
     onChange: function (selectedDates, dateStr, instance) {
+      valueInputEndDate = dateStr;
       endDate = selectedDates;
     },
   }).open();
 }
 
-// MODE POPUP
-function onSelectCourse(e) {
+// SELECTED VALUE
+function onSelectCourse(e, name) {
   e.preventDefault();
-  mode = 'COURSE';
-  coursePopup();
+  chooseCourse = name;
+  bookLearn();
 }
 
-function onSelectMentor(e) {
+function onSelectMentor(e, mentor) {
   e.preventDefault();
-  mode = 'MENTOR';
-  mentorPopup();
+  chooseMentor = mentor;
+  document.getElementById('formId').scrollIntoView({behavior: 'smooth'});
+  
+  if (window.innerWidth < 768) {
+    newMentor = [];
+    isMobile = true;
+  }
+  bookLearn();
 }
 
+function onSelectMentorAgain (e) {
+  e.preventDefault();
+  chooseMentor = null;
+  if (window.innerWidth < 768) {
+    newMentor = mentors;
+  }
+  bookLearn();
+}
+
+function onCheckedDate (e, time) {
+  e.preventDefault()
+  bookTime = time;
+  const selectDateEl = document.querySelectorAll('.select-date');
+  selectDateEl.forEach(i => {
+    const el = i.closest('.select-date');
+    if(el.classList.contains('bg-primary')) {
+      el.classList.remove('bg-primary')
+    }
+  })
+  e.target.closest('.select-date').classList.add('bg-primary', 'rounded-full');
+}
+
+function onInputMessage (e) {
+  messageINput = e.target.value;
+}
 
 ////////////////////// CREATE SCHEDULE ////////////////////////////
 const scheduleLearn = () => {
-  const schedules = window.schedules;
   contentEl.innerHTML = "";
   contentEl.innerHTML = `
     <div>
@@ -310,282 +404,22 @@ const scheduleLearn = () => {
     return listContent;
   }
 };
+ 
 
-
-/////////////////// CREATE POPUP ////////////////////
-if (newCourses.length && mentors.length) {
-  let page = 1;
-  // // CREATE POPUP WITH COURSE LIST
-  function coursePopup() {
-    newCourses = [...courses];
-    const totalPage = Math.ceil(newCourses.length / limitCourse);
-    if (popupEl.classList.contains('hidden')) {
-      popupEl.classList.remove('hidden');
-    }
-    createdPagination(totalPage, page)
-  }
-
-  // CREATE POPUP WITH MENTOR LIST
-  function mentorPopup () {
-    const totalPage = Math.ceil(mentors.length / limitMentor);
-    if (popupEl.classList.contains('hidden')) {
-      popupEl.classList.remove('hidden');
-    }
-    createdPagination(totalPage, page)
-  }
-}
-
-function listCourse(data) {
-  let content = '';
-  data.forEach(course => {
-    content += `
-    <li class="flex justify-between items-center gap-2">
-      <div class="basic-1/5 grow-0 shrink-0 basis-auto">
-        <img class="w-[80px]" src="${course.picture}" alt="${course.name}" />
-      </div>
-      <div class="basic-3/5">
-        <h3 class="text-md md:text-lg font-semibold">${course.name}</h3>
-        <p class="text-sm text-slate-800 text-ellipsis overflow-hidden h-[40px]">${course.description}</p>
-      </div>
-      <div class="basic-1/5"><button onclick='onChooseCourse(${JSON.stringify(course)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded hover:opacity-80">Chọn</button></div>
-    </li>
-    `;
-  })
-  return content;
-}
-
-function listMentor(data) {
-  let content = '';
-  data.forEach(mentor => {
-    content += `
-    <li class="flex items-center justify-start w-full md:w-11/12 gap-2 md:gap-8 border border-slate-200 rounded-md">
-      <div class="w-[90px] grow-0 shrink-0 basis-auto">
-        <img class="w-full rounded-md" src="${mentor.picture}" alt="${mentor.name}" />
-      </div>
-      <div class="">
-        <h3 class="text-md md:text-lg font-semibold">${mentor.name}</h3>
-        <p class="text-sm text-slate-800 text-ellipsis overflow-hidden max-h-[40px]">${mentor.workPlace}</p>
-        <span class="text-md font-semibold text-[#8D939E]">Mã gia sư: ${mentor.code}</span>
-      </div>
-      <div class="flex justify-end grow pr-4 hover:opacity-80"><button onclick='onChooseMentor(${JSON.stringify(mentor)})' class="bg-primary text-sm md:text-base text-white py-1 px-4 rounded">Chọn</button></div>
-    </li>
-    `;
-  })
-  return content;
-}
-
-// CHOOSE MENTOR
-function onChooseMentor(mentor) {
-  chooseMentor = mentor;
-  valueMentor = `${mentor.code} - ${mentor.name}`;
-  onClose()
-  bookLearn();
-}
-// CHOOSE COURSE
-function onChooseCourse(course) {
-  chooseCourse = course;
-  valueCourse = course.name;
-  onClose()
-  bookLearn();
-}
-
-// RENDER POPUP
-function createdPagination(totalPages, page) {
-  window.scrollTo(0, 0);
-  let result = []
-  if (mode === 'MENTOR') {
-    const startPage = (page - 1) * limitMentor;
-    const endPage = page * limitMentor;
-    const data = newMentor.slice(startPage, endPage);
-    result.push(...data);
-  }
-  if (mode === 'COURSE') {
-    const startPage = (page - 1) * limitCourse;
-    const endPage = page * limitCourse;
-    const data = newCourses.slice(startPage, endPage);
-    result.push(...data);
-  }
-    
-  let liTag = "";
-  let active;
-  let beforePage = page - 1;
-  let afterPage = page + 1;
-  if (page > 1) {
-    liTag += `<li class="btn prev" onclick="createdPagination(${totalPages}, ${page - 1
-      })"><span><i class="fas fa-angle-left"></i></span></li>`;
-  }
-  if (page > 2) {
-    liTag += `<li class="first numb" onclick="createdPagination(${totalPages}, 1)"><span>1</span></li>`;
-    if (page > 3) {
-      liTag += `<li class="dots"><span>...</span></li>`;
-    }
-  }
-  // how many pages or li show before the current li
-  if (page == totalPages) {
-    if (beforePage - 1 > 1) {
-      beforePage = beforePage - 1;
-    }
-  } else if (page == totalPages - 1) {
-    if (page > 1) {
-      beforePage = beforePage;
-    }
-  }
-  // how many pages or li show after the current li
-  if (page == 1) {
-    if (afterPage + 1 < totalPages) {
-      afterPage = afterPage + 1;
-    }
-  } else if (page == 2) {
-    afterPage = afterPage;
-  }
-  for (var i = beforePage; i <= afterPage; i++) {
-    if (i > totalPages) {
-      continue;
-    }
-    if (i == 0) {
-      i = i + 1;
-    }
-    if (page == i) {
-      active = "active";
-    } else {
-      active = "";
-    }
-    liTag += `<li class="numb ${active}" onclick="createdPagination(${totalPages}, ${i})"><span>${i}</span></li>`;
-  }
-  if (page < totalPages - 1) {
-    if (page < totalPages - 2) {
-      liTag += `<li class="dots"><span>...</span></li>`;
-    }
-    liTag += `<li class="last numb" onclick="createdPagination(${totalPages}, ${totalPages})"><span>${totalPages}</span></li>`;
-  }
-  if (page < totalPages) {
-    liTag += `<li class="btn next" onclick="createdPagination(${totalPages}, ${page + 1
-      })"><span><i class="fas fa-angle-right"></i></span></li>`;
-  }
-  
-  // UPDATE POPUP ELEMENT
-  if (mode === 'COURSE') {
-
-    popupEl.innerHTML = `
-      <div class="w-full md:w-6/12 h-screen md:h-5/6 relative py-4 md:py-10 px-4 md:px-12 mt-0 md:mt-[60px] m-auto gap-6 bg-white rounded">
-        <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-solid fa-xmark"></i></div>
-        <div>
-          <h2 class="text-xl md:text-2xl font-bold border-l-2 border-solid border-black pl-2">Chọn môn học</h2>
-          <div class="relative min-w-[200px] group my-4 md:my-6 py-1 px-4 border rounded-xl w-full md:w-[200px]">
-            <div class="py-1 px-2 rounded w-full flex items-center justify-between cursor-pointer bg-white gap-4">
-              <span class="text-black text-sm md:text-base font-semibold" id="showCourse">
-                - Lọc theo môn -
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M9 1L5 5L1 1" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <div class="opacity-0 invisible group-hover:opacity-100 group-hover:visible rounded bg-white absolute top-[100%] left-0 right-0 z-50 max-h-[300px] shadow transition overflow-y-auto">
-              ${filterCoursesList.map(item => {
-                return `<div onclick='onFilterCourse(${JSON.stringify(item)})' class="py-1 px-2 text-sm md:text-base text-black cursor-pointer hover:bg-[#0417764d] text-black">${item.toString() === 'All' ? 'Tất cả' : item.toString()}</div>`
-              }).join('')}
-            </div>
-          </div>
-        </div>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          ${listCourse(result)}
-        </ul>
-        <div class="pagination mt-4">
-          <ul>
-            ${liTag}
-          </ul>
-        </div>
-      </div>
-    `;
-  }
-  if (mode === 'MENTOR') {
-    popupEl.innerHTML = `
-      <div class="relative w-full md:w-6/12 h-screen md:h-5/6 py-4 md:py-6 px-4 md:px-12 mt-0 md:mt-[60px] m-auto gap-6 bg-white rounded">
-        <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-solid fa-xmark"></i></div>
-        <div>
-          <h2 class="text-xl md:text-2xl font-bold border-l-2 border-solid border-black pl-2">Chọn giáo viên gia sư</h2>
-          <div class="w-80 rounded-xl border py-2 px-2 my-3">
-            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
-            <input oninput="onSearchMentor(event)" class="text-sm md:text-base outline-none w-64 ml-2" type="text" placeholder="Tìm theo tên/mã gia sư" name="search" />
-          </div>
-        </div>
-        <ul class="flex flex-col gap-2 md:gap-4" id="list-mentor-popup">
-          ${result.length ? listMentor(result) : '<li class="h-screen mt-28 text-center italic"><div>Không tìm thấy gia sư phù hợp!</div></li>'}
-        </ul>
-        <div class="pagination mt-3 md:mt-4">
-          <ul>
-            ${liTag}
-          </ul>
-        </div>
-      </div>
-    `;
-  }
-}
-
-// FILTER COURSE
-function onFilterCourse(name) {
-  let updateCourse;
-  if (name.toLowerCase() === 'all') {
-    updateCourse = [...courses];
-  } else {
-    updateCourse = newCourses.filter(course => {
-      if (removeAccents(course.name.toLowerCase()).includes(removeAccents(name.toLowerCase()))) {
-        return course;
-      }
-    });
-  }
-  newCourses = updateCourse;
-  const totalPage = Math.ceil(newCourses.length / limitCourse);
-  createdPagination(totalPage, 1)
-  newCourses = [...courses];
-}
-
-// SEARCH MENTOR
-let timeoutId;
-let previousValue = '';
-function onSearchMentor(e) {
-  clearTimeout(timeoutId);
-
-  const searchInput = removeAccents(e.target.value.toLowerCase());
-  timeoutId = setTimeout(() => {
-    if (searchInput !== previousValue) {
-      const updateMentor = newMentor.filter(mentor => {
-        if (removeAccents(mentor.name.toLowerCase()).includes(searchInput) || removeAccents(mentor.code.toLowerCase()).includes(searchInput)) {
-          return mentor
-        }
-      });
-      newMentor = updateMentor;
-      const totalPage = Math.ceil(newMentor.length / limitMentor);
-      createdPagination(totalPage, 1)
-      newMentor = [...mentors]
-      previousValue = searchInput;
-    }
-  }, 1400)
-}
-
-// HANDLE SEARCH
-function onBookSearch(e) {
+// BOOK CALENDAR LEARN
+function onSubmitBook(e) {
   e.preventDefault();
-  if (!chooseCourse) {
-    document.getElementById('message-error').classList.remove('hidden');
-    return;
-  }
   const data = {
     date: {
       start: startDate,
       end: endDate
     },
     mentor: chooseMentor,
-    course: chooseCourse
+    course: chooseCourse,
+    timeLearn: bookTime,
+    message: messageINput
   }
   console.log(data);
-  document.getElementById('show-book-course').classList.remove('hidden')
-}
-
-// BOOK CALENDAR LEARN
-function onSubmitBook(e) {
-  e.preventDefault();
-  console.log(e);
 
 }
 

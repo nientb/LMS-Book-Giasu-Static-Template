@@ -19,6 +19,27 @@
   border-left              : 210px solid white;
   border-bottom-left-radius: 10px
 }
+.book-mentor::after {
+  content                  : '';
+  position                 : absolute;
+  left                     : 0;
+  right                    : 0;
+  bottom                   : -15px;
+  border-bottom            : 16px solid transparent;
+  border-left              : 227px solid white;
+  border-bottom-left-radius: 10px
+}
+.book-mentor::before {
+  position               : absolute;
+  content                : '';
+  height                 : 20px;
+  top                    : -15px;
+  right                  : 0;
+  left                   : 0;
+  background-color       : #fff;
+  border-top-left-radius : 10px;
+  border-top-right-radius: 10px;
+}
 
 .detail-mentor::after {
   content                  : '';
@@ -62,12 +83,12 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #ebebf2;
+    background: #f5faff;
     border-radius: 5px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #f5faff;
+    background: #ebebf2;
     border-radius: 5px;
   }
 
@@ -154,4 +175,10 @@
 .pagination ul li:last-child:hover {
   color     : #fff;
   background: #0d7dfc;
+}
+
+@media (max-width: 720px) {
+  .book-mentor::after {
+    border-left              : 180px solid white;
+  }
 }
