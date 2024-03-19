@@ -14,7 +14,7 @@
   position                 : absolute;
   left                     : 0;
   right                    : 0;
-  bottom                   : -16px;
+  bottom                   : -15px;
   border-bottom            : 16px solid transparent;
   border-left              : 210px solid white;
   border-bottom-left-radius: 10px
@@ -180,5 +180,48 @@
 @media (max-width: 720px) {
   .book-mentor::after {
     border-left              : 180px solid white;
+  }
+  .info-before::after {
+    border-left              : 180px solid white;
+  }
+  .detail-mentor::after {
+    border-left              : 180px solid white;
+  }
+}
+
+@media (min-width: 1024px) {
+  .book-mentor::after {
+    border-left              : 131px solid white;
+  }
+  .info-before::after {
+    border-left              : 131px solid white;
+  }
+  .detail-mentor::after {
+    border-left              : 184px solid white;
+  }
+}
+
+@media (min-width: 1080px) {
+  .book-mentor::after {
+    border-left              : 178px solid white;
+  }
+  .info-before::after {
+    border-left              : 178px solid white;
+  }
+  .detail-mentor::after {
+    border-left              : 245px solid white;
+  }
+}
+
+@media (min-width: 1440px) {
+  .book-mentor::after {
+    border-left              : 228px solid white;
+  }
+  .info-before::after {
+    border-left              : 228px solid white;
+  }
+  .detail-mentor::after {
+    bottom                   : -12px;
+    border-left              : 314px solid white;
   }
 }
