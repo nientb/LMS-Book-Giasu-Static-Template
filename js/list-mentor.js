@@ -114,7 +114,7 @@ function onDetailMentor(mentor) {
   popupEl.innerHTML = '';
   popupEl.innerHTML = `
     <div>
-      <div class="w-full md:w-6/12 h-screen md:h-4/6 relative py-10 px-12 mt-0 md:mt-[60px] m-auto flex flex-col md:flex-row gap-6 bg-white rounded">
+      <div class="w-full md:w-8/12 xl:w-7/12 h-screen md:h-4/6 relative py-10 px-12 mt-0 md:mt-[60px] m-auto flex flex-col md:flex-row gap-6 bg-white rounded">
         <div class="absolute right-4 top-2 text-2xl hover:opacity-60 cursor-pointer" onclick="onClose()"><i class="fa-regular fa-circle-xmark"></i></div>  
         <div class="flex-1"><img class="w-[300px]" src="${mentor.picture}" alt="${mentor.name}" /></div>
         <div class="flex-1">
